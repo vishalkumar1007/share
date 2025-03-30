@@ -1,0 +1,256 @@
+/* #121111 */
+.landing_main{
+    /* background-color: red; */
+    width: 100vw;
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.landing_main_arrange_width{
+    /* background-color: rgba(195, 0, 255, 0.797); */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    max-width: 1280px;
+    width: 100%;
+    height: 100%;
+    /* max-width: 1200px; */
+    gap: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.landing_main_top{
+    /* background-color: rgba(178, 34, 34, 0.263); */
+    width: 90%;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    justify-content: space-between;
+}
+
+
+.landing_main_top_navbar_vishal_profile{
+    background-color: #000000;
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    border: 1px dashed #3b2502;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    opacity: 0.7;
+    cursor: pointer;
+}
+.landing_main_top_navbar_vishal_profile img{
+    margin-top: 10px;
+    width: 105%;
+    height: 105%;
+    /* border-radius: 50px; */
+    object-fit: cover;
+    z-index: 2;
+}
+.landing_main_top_navbar_vishal_profile_light{
+    background-color: rgb(255, 201, 201);
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    filter: blur(15px);
+    z-index: 1;
+}
+.landing_main_top_navbar_login{
+    color: white;
+    /* border: 1px solid rgb(128, 90, 90); */
+    /* width: 20px; */
+    height: 60px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+.landing_main_top_navbar_login button{
+    /* font-size: 10px; */
+    height: 24px;
+    width: 24px;
+    background-color: transparent;
+    border: none;
+    color: rgb(81, 80, 80);
+    cursor: pointer;
+}
+.landing_main_top_navbar_login button svg{
+    width: 100%;
+    height: 100%;
+}
+
+.landing_main_top_navbar::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #cd0d0d0f, #5e390221);
+    z-index: 1;
+}
+
+.landing_main_bottom{
+    /* background-color: rgba(22, 140, 122, 0.234); */
+    width: 100%;
+    /* height: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.landing_main_bottom_toggle{
+    background-color: #9b232325;
+    color: #912323;
+    padding: 5px 15px 5px 15px;
+    border-radius: 50px;
+    margin:15px 0px 40px 0px ;
+    font-weight: 600;
+    opacity: 0.8;
+}
+.landing_main_bottom_intro_text {
+    /* background-color: rgba(184, 135, 11, 0.882); */
+    width: 100%;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 50px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    background-image: linear-gradient(to right, #b80f0f, #3d0808);
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-shadow: 0px 0px 5px #f2070757;
+    position: relative;
+}
+
+.landing_main_bottom_intro_text::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(to bottom, transparent, #000000);
+    z-index: 1;
+}
+
+.landing_main_bottom_action_and_animation{
+    /* background-color: rgba(139, 0, 139, 0.089); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    /* height: calc(100% - 120px); */
+}
+
+.landing_main_bottom_open_share_text{
+    /* background-color: rgb(65, 105, 225); */
+    width: 35%;
+    height: 100px;
+    /* filter: blur(80px); */
+}
+.landing_main_bottom_animation {
+    /* background-color: red; */
+    width: 600px;
+    height: 100%; 
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    opacity: 0.7;
+}
+
+.landing_main_bottom_animation video {
+    width: 60%;
+    height: auto;
+    max-width: 100%;
+    object-fit: cover; /* Ensures it covers the div properly */
+}
+
+.landing_main_bottom_open_share_image{
+    /* background-color: rgb(225, 100, 65); */
+    width: 35%;
+    height: 100px;
+    /* filter: blur(80px); */
+}   
+.landing_main_bottom_later{
+    /* background-color: rgba(128, 128, 128, 0.341); */
+    width: 100%;
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    /* height: 100px; */
+}
+
+
+.landing_main_bottom_later button{
+    padding:12px 15px;
+    background: transparent;
+    /* border: 1px solid gray; */
+    border-radius: 5px;
+    /* color: gray; */
+    font-size: 14px;
+    cursor: pointer;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    transition: all 0.3s ease;
+}
+.landing_main_open_text_share{
+    border: 1px solid #f02d31;
+    color: #f02d31;
+    box-shadow: 0 0 10px #f02d31;
+}
+.landing_main_open_text_share{
+    /* border: 1px solid #db8229; */
+    /* color: #db8229; */
+    /* border: 1px solid gray; */
+    /* color: gray; */
+    /* box-shadow: 0 0 10px #db8229; */
+}
+.landing_main_open_image_share{
+    border: 1px solid #db8229;
+    color: #db8229;
+    box-shadow: 0 0 10px #db8229;
+}
+
+
+@media (max-width: 768px) {
+    .landing_main_top{
+        height: 100px;
+    }
+    .landing_main_bottom_animation{
+        margin-top: 20px;
+    }
+    .landing_main_bottom_toggle{
+        margin-top: 40px;
+    }
+    .landing_main_bottom_animation{
+        /* background-color: royalblue; */
+        width: 100%;
+    }
+    .landing_main_bottom_open_share_text{
+        display: none;
+    }
+    .landing_main_bottom_open_share_image{
+        display: none;
+    }
+    .landing_main_bottom_later{
+        margin-top: 30px;
+    }
+}
