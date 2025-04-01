@@ -8,6 +8,21 @@
     align-items: center;
     overflow: hidden;
 }
+.Landing_over_lay{
+    background-color: #0000009e;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(55px);
+    padding: 15px ;
+    box-sizing: border-box;
+}
 .landing_main_arrange_width{
     /* background-color: rgba(195, 0, 255, 0.797); */
     display: flex;
@@ -47,6 +62,7 @@
     position: relative;
     opacity: 0.7;
     cursor: pointer;
+    /* z-index: 15; */
 }
 .landing_main_top_navbar_vishal_profile img{
     margin-top: 10px;
@@ -75,6 +91,7 @@
     align-items: center;
     position: relative;
     overflow: hidden;
+    /* z-index: 15; */
 }
 .landing_main_top_navbar_login button{
     /* font-size: 10px; */
@@ -111,13 +128,13 @@
     flex-direction: column;
 }
 .landing_main_bottom_toggle{
-    background-color: #9b232325;
-    color: #912323;
+    background-color: #af282825;
+    color: #931f1f;
     padding: 5px 15px 5px 15px;
     border-radius: 50px;
     margin:15px 0px 40px 0px ;
     font-weight: 600;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 .landing_main_bottom_intro_text {
     /* background-color: rgba(184, 135, 11, 0.882); */

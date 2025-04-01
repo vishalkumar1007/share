@@ -1,8 +1,55 @@
+import { useEffect, useState } from "react";
+import EnjoyText from "../EnjoyText/EnjoyText";
+import EnjoyImage from "../EnjoyImage/EnjoyImage";
 import "./Landing.css";
 
 const Landing = () => {
+  const[textTabOpenStatus , setTextTabOpenStatus] = useState(false);
+  const[imageTabOpenStatus , setImageTabOpenStatus] = useState(false);
+
+  const handelToCloseTextTab = (action)=>{
+    if (action) {
+      localStorage.setItem('openTab','text');
+    } else {
+      localStorage.setItem('openTab','none');
+    }
+    setTextTabOpenStatus(action)
+  }
+  const handelToCloseImageTab = (action)=>{
+    if (action) {
+      localStorage.setItem('openTab','image');
+    } else {
+      localStorage.setItem('openTab','none');
+    }
+    setImageTabOpenStatus(action)
+  }
+
+  useEffect(()=>{
+    const actionTab = localStorage.getItem('openTab');
+    if(actionTab=='text'){
+      setTextTabOpenStatus(true);
+    }else if(actionTab==='image'){
+      setImageTabOpenStatus(true);
+    }else{
+      setTextTabOpenStatus(false);
+      setImageTabOpenStatus(false);
+    }
+  },[])
+
   return (
     <div className="landing_main">
+      {
+        textTabOpenStatus?
+        <div className="Landing_over_lay">
+          <EnjoyText TextTabOpenAction={(action)=>handelToCloseTextTab(action)}/>
+        </div>:null
+      }
+      {
+        imageTabOpenStatus?
+        <div className="Landing_over_lay">
+          <EnjoyImage ImageTabOpenAction={(action)=>handelToCloseImageTab(action)}/>
+        </div>:null
+      }
       <div className="landing_main_arrange_width">
         <div className="landing_main_top">
             {/* <div className="landing_main_top_navbar"> */}
@@ -16,7 +63,7 @@ const Landing = () => {
             {/* </div> */}
         </div>
         <div className="landing_main_bottom">
-            <span className="landing_main_bottom_toggle">✨ Login to save forever</span>
+            <span className="landing_main_bottom_toggle">✨ Login to save data forever</span>
           <div className="landing_main_bottom_intro_text">
             Share With Multiverse
           </div>
@@ -36,8 +83,8 @@ const Landing = () => {
           </div>
         </div>
         <div className="landing_main_bottom_later">
-            <button className="landing_main_open_text_share">Enjoy Text</button>
-            <button className="landing_main_open_image_share">Enjoy Image</button>
+            <button className="landing_main_open_text_share" onClick={()=>handelToCloseTextTab(true)}>Enjoy Text</button>
+            <button className="landing_main_open_image_share"onClick={()=>handelToCloseImageTab(true)}>Enjoy Image</button>
         </div>
       </div>
     </div>
