@@ -1,27 +1,72 @@
-.EnjoyText_main{
-    background: linear-gradient(to bottom, #4f12122a, #2c0d652d);
+.EnjoyText_main {
+    position: relative;
     width: 100%;
     height: 100%;
-    /* backdrop-filter: blur(25px); */
-    /* opacity: 0.2; */
+    max-width: 1900px;
     border-radius: 12px;
     overflow: hidden;
     border: 2px solid #1f1e1e;
-    max-width: 1900px;
+    z-index: 0;
 }
-.EnjoyText_main_top{
-    /* background-color: darkgoldenrod; */
+
+.EnjoyText_main_bg_v {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 70px;
-    display: flex;
-    justify-content: end;
-    /* align-items: center; */
-    padding: 15px 15px;
-    box-sizing: border-box;
+    height: 100%;
+    z-index: -1; 
+}
+
+.EnjoyText_main_bg_v video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ensures it fills the container without distortion */
+    object-position: center;
+}
+
+
+/* Background layer with opacity */
+.action_main::before {
+    content: "";
+    position: absolute;
+    top: 0px; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, #4f12122a, #2c0d652d), 
+                url('/src/assets/doctor_strange.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.0;
+    /* opacity: 1; */
+    z-index: 0;
+    /* scale: -1; */
+    transition: all 1s ease-in-out;
+    animation: coming 2.5s ease-in-out forwards;
+}
+@keyframes coming {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0.8;
+        transform: scale(1.02);
+    }
+}
+
+
+.EnjoyText_main_top{
+    /* background-color: rgba(184, 135, 11, 0.089); */
+    width: 100%;
+    height: 120px;
+    position: relative;
 }
 .EnjoyText_main_top_close_tab{
+    position: absolute;
     background-color: #80808000;
     /* background-color: #9f9f9f; */
+    top: 10px;
+    right: 10px;
     width: 25px;
     height: 25px;
     border-radius: 5px;
@@ -34,10 +79,245 @@
     overflow: hidden;
 }
 .EnjoyText_main_top_close_tab:hover{
-    border: 2px solid #454444b3;
+    border: 2px solid #383737b3;
+}
+.EnjoyText_main_top_title{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    font-size: 35px;
+    font-weight: 600;
+    letter-spacing: 4px;
 }
 .EnjoyText_main_top_bottom{
-    /* background-color: rgba(11, 144, 184, 0.411); */
+    /* background-color: #0b90b826; */
     width: 100%;
-    height: calc(100% - 50px);
+    height: calc(100% - 120px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+.EnjoyText_main_top_bottom_share_main{
+    /* background-color: forestgreen; */
+    width: 90%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    /* flex-direction: row; */
+}
+.EnjoyText_main_top_bottom_text_send_lighting_main{
+    /* background-color: darkblue; */
+    width: 38%;
+    height: 93%;
+    /* width: 120px; */
+    /* height: 120px; */
+    /* background-color: red; */
+    /* position: absolute; */
+    /* z-index: -1; */
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 300px;
+}
+
+
+.EnjoyText_main_top_bottom_text_send{
+    background-color: #16161618;
+    backdrop-filter: blur(25px);
+    width: 100%;
+    height: 100%;
+    border: 2px solid #242424b9;
+    /* border: 2px solid #de0c0c6d; */
+    border-radius: 10px;
+    /* margin: 10px; */
+    padding: 10px;
+    box-sizing: border-box;
+    /* box-shadow: 0px 0px 10px 0px #ff0000b1; */
+    /* position: relative; */
+    /* z-index: 4; */
+    /* background-color: darkblue; */
+    /* overflow: hidden; */
+}
+
+.EnjoyText_main_top_bottom_text_send_p1{
+    /* background-color: #4d2424b6; */
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+.EnjoyText_main_top_bottom_text_send_p2{
+    /* background-color: #274d24b6; */
+    width: 100%;
+    /* height: 100px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.enjoy_text_input_box {
+    color: rgb(238, 238, 238);
+    display: block;
+    width: 80%;
+    height: auto;
+    min-height: 180px; 
+    max-height: 220px;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-color: #40272719;
+    background-clip: padding-box;
+    border: 2px dotted #1f1e1e00;
+    box-shadow: 0 0 0 0.25rem #6060602c;
+    border-color: #484848b9;
+    border-radius: 5px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    resize: vertical;
+    outline: 0;
+}
+
+/* Focus state (when clicked) */
+.enjoy_text_input_box:focus {
+    border-color: #890b0b; /* Bootstrap's focus border color */
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem #a4020244; /* Bootstrap's blue focus glow */
+}
+
+.EnjoyText_main_top_bottom_text_send_p3{
+    /* background-color: #32244db6; */
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+.EnjoyText_main_top_bottom_text_send_p3 button{
+    background-color: transparent;
+    border: 1px solid #1f1e1e;
+    width: 85%;
+    color: #ffffff;
+    padding: 10px 0px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.EnjoyText_main_top_bottom_animation_joints{
+    background-color: #56a16600;
+    /* background-color: #0bbe31ae; */
+    width: 24%;
+    height: 100%;
+}
+.EnjoyText_main_top_bottom_text_receive{
+    background-color: #16161618;
+    backdrop-filter: blur(25px);
+    width: 38%;
+    height: 93%;
+    border: 2px solid #1f1e1e8a;
+    border-radius: 10px;
+    /* margin: 10px; */
+    padding: 10px;
+    box-sizing: border-box;
+    min-width: 300px;
+}
+
+
+/* <!-- HTML !-->
+<button class="button-33" role="button">Button 33</button> */
+
+.enjoy_text_button_do_magic{
+    /* background-color: rgba(162, 255, 0, 0.158); */
+    width: 100%;
+    height: 30%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    padding-top: 25px;
+    position: relative;
+}
+.enjoy_text_button_do_magic_bg_video{
+    /* background-color: #ff69b452; */
+    width: 100%;
+    height: 85%;
+    position: absolute;
+    z-index: 1;
+}
+.enjoy_text_button_do_magic_bg_video image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    /* opacity: 0.5; */
+    z-index: 1; 
+}
+.enjoy_text_button_do_magic_button{
+    border: 2px solid #1f1e1e00;
+    box-shadow: 0 0 0 0.25rem #6060602c;
+    border-color: #484848b9;
+    width: 85%;
+    height: 40px;
+    border-radius: 5px;
+    z-index: 6;
+    overflow: hidden;
+    /* box-shadow: 0px 0px 10px 0px #0b0000b1; */
+}
+.enjoy_text_button_do_magic_button:hover{
+    border: 2px solid #1f1e1e06;
+    box-shadow: 0 0 0 0.25rem #60606027;
+    border-color: #484848a2;
+}
+.enjoy_text_button_do_magic_button button:hover{
+    color: #ffffff60;
+}
+.enjoy_text_button_do_magic_button button{
+    background-color: transparent;
+    color: #ffffff92;
+    border: none;
+    width: 100%;
+    height: 40px;
+    cursor: pointer;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+/* CSS */
+
+
+@media (max-width: 788px) {
+    .EnjoyText_main_top_bottom_share_main{
+        /* background-color: red; */
+        display: flex;
+        flex-direction: column;
+        /* justify-content: end; */
+        overflow: hidden;
+    }
+    .EnjoyText_main_top_bottom_text_send_lighting_main{
+        /* background-color: darkblue; */
+        width: 100%;
+        max-height: 450px;
+    }
+    .EnjoyText_main_top_bottom_animation_joints{
+        /* background-color: chocolate; */
+        width: 100%;
+        display: none;
+    }
+    .EnjoyText_main_top_bottom_text_receive{
+        /* background-color: darkgreen; */
+        width: 100%;
+        display: none;
+    }
 }
