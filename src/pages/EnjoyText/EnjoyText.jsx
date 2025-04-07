@@ -90,7 +90,28 @@ const EnjoyText = ({ TextTabOpenAction }) => {
           </div>
 
           <div className="EnjoyText_main_top_bottom_animation_joints"></div>
-          <div className="EnjoyText_main_top_bottom_text_receive"></div>
+          <div className="EnjoyText_main_top_bottom_text_receive">
+            <div className="EnjoyText_main_top_bottom_text_receive_title">
+                <p>Don't worry, we will take care of your laziness. You have three options - pick whichever you're comfortable with.</p>
+            </div>
+            <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box_main">
+              <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box">
+                <img src="/src/assets/QR_code.svg" alt="" />
+              </div>
+            </div>
+            <div className="EnjoyText_main_top_bottom_text_receive_code_preview">
+                <p>{225265}</p>
+            </div>
+            <div className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_main_box">
+                <div className="EnjoyText_main_top_bottom_text_receive_title_url_cpy">
+                  <span className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_url">https://vishalkumar1007.githu.io</span>
+                  <span className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_clipboard">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#967171"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/></svg>
+                  </span>
+                </div>
+            </div>
+            
+          </div>
         </div>
       </div>
     </div>
