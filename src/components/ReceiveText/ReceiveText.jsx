@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import "./receiveText.css";
 import QrCodeScanner from "../QrCodeScanner/QrCodeScanner";
+import scanImage from '../../assets/scan.png'
 
 const ReceiveText = () => {
   const [inputCodeSection, setInputCodeSection] = useState(true);
@@ -76,7 +77,7 @@ const ReceiveText = () => {
             </div>
             <div className="receiveText_main_user_input_code_main">
               <button className="receiveText_main_user_input_code_main_qr_scanner_btn" onClick={()=>setScannerOpen(true)}>
-                <img src="/src/assets/scan.png" alt="" />
+                <img src={scanImage} alt="" />
               </button>
             </div>
           </div>

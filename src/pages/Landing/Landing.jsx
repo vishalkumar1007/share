@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import EnjoyText from "../EnjoyText/EnjoyText";
 import EnjoyImage from "../EnjoyImage/EnjoyImage";
 import "./Landing.css";
+import myProfileImage from '../../assets/background_image_2.png'
+import homeVideo from '../../assets/home_animation_crop.mp4'
 
 const Landing = () => {
   const[textTabOpenStatus , setTextTabOpenStatus] = useState(false);
@@ -55,7 +57,7 @@ const Landing = () => {
             {/* <div className="landing_main_top_navbar"> */}
                 <div className="landing_main_top_navbar_vishal_profile">
                     <div className="landing_main_top_navbar_vishal_profile_light"></div>
-                    <img src="/src/assets/background_image_2.png" alt="" />
+                    <img src={myProfileImage} alt="" />
                 </div>
                 <div className="landing_main_top_navbar_login">
                     <button><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="29px" fill="#999999"><path d="M144.74-258.41v-47.88h670.52v47.88H144.74Zm0-197.89v-47.88h670.52v47.88H144.74Zm0-197.88v-47.88h670.52v47.88H144.74Z"/></svg></button>
@@ -71,7 +73,7 @@ const Landing = () => {
             <div className="landing_main_bottom_open_share_text"></div>
             <div className="landing_main_bottom_animation">
               <video
-                src="/src/assets/home_animation_crop.mp4"
+                src={homeVideo}
                 autoPlay
                 loop
                 muted

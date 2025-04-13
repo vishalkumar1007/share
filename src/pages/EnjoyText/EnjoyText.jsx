@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import "./EnjoyText.css";
 import { useRef } from "react";
-
+import EnjoyBackground from '../../assets/incoming_dr_strange.mp4'
 import ShareText from "../../components/ShareText/ShareText";
 import ReceiveText from "../../components/ReceiveText/ReceiveText";
+import drStrangeAudioBg from '../../assets/flash-and-quicksilver-sound.mp3'
 
 const EnjoyText = ({ TextTabOpenAction }) => {
   const [openReceiveSection, setOpenReceiveSection] = useState(false);
@@ -60,12 +61,12 @@ const EnjoyText = ({ TextTabOpenAction }) => {
       {/* <img className='lighting_image' src="/src/assets/lighting_dr_str.jpg" alt="" /> */}
       <div className="EnjoyText_main_bg_v">
         <video
-          src="/src/assets/incoming_dr_strange.mp4"
+          src={EnjoyBackground}
           ref={playMagic}
         ></video>
         <audio ref={playSound}>
           <source
-            src="/src/assets/flash-and-quicksilver-sound.mp3"
+            src={drStrangeAudioBg}
             type="audio/mp3"
           />
         </audio>

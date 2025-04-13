@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./ShareText.css";
 import { toast } from "sonner";
+import qrCodeDemoImage from '../../assets/QR_code.svg'
 
 const ShareText = ({ actionDoMagic }) => {
-  const[openText,setOpenTex] = useState(false);
+  const[openText,setOpenTex] = useState(true);
   const [shareTextUrl , setShareTextUrl] = useState('https://vishalkumar1007.github.io')
 
   const actionDoMagicFun = () => {
@@ -69,7 +70,7 @@ const ShareText = ({ actionDoMagic }) => {
           </div>
           <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box_main">
             <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box">
-              <img src="/src/assets/QR_code.svg" alt="" />
+              <img src={qrCodeDemoImage} alt="" />
             </div>
           </div>
           <div className="EnjoyText_main_top_bottom_text_receive_code_preview">
