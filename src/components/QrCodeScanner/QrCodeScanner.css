@@ -1,0 +1,41 @@
+.QrCodeScanner_main{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.QrCodeScanner_videoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+
+}
+.QrCodeScanner_qrVideo {
+  object-fit: cover;
+  /* border: 1px solid #ddd; */
+  width: 300px;
+  height: 300px;
+  border-radius: 30px;
+}
+
+.QrCodeScanner_scannedText {
+  word-wrap: break-word;
+}
+
+.QrCodeScanner_close_btn{
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  border: 1px solid #901d1d;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  font-size: 10px;
+  cursor: pointer;
+}

@@ -1,24 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./EnjoyText.css";
 import { useRef } from "react";
 
+import ShareText from "../../components/ShareText/ShareText";
+import ReceiveText from "../../components/ReceiveText/ReceiveText";
+
 const EnjoyText = ({ TextTabOpenAction }) => {
-  const [doMagic, setDoMagic] = useState(false);
+  const [openReceiveSection, setOpenReceiveSection] = useState(false);
+  const [disableWhileDoMagic, setDisableWhileDoMagic] = useState(false);
   const playMagic = useRef(null);
-  const igniteSparks = useRef(null);
   const playSound = useRef(null);
 
-  const actionDoMagic = () => {
-    playMagic.current?.play();
-    igniteSparks.current?.play();
-    playSound.current?.play();
+  const [doMagic, setDoMagic] = useState(false);
+  const actionDoMagic = (action) => {
+    if (!action) {
+      return;
+    }
 
+    playMagic.current?.play();
+    playSound.current?.play();
+    setDisableWhileDoMagic(true); // disable change tab btn on mobile view
     const timeout = setTimeout(() => {
       setDoMagic(true);
+      setDisableWhileDoMagic(false);
     }, 2500);
 
     return () => clearTimeout(timeout);
   };
+
+  const switchTheShareToReceive = () => {
+    if (openReceiveSection) {
+      localStorage.setItem("openReceivedSection", false);
+    } else {
+      localStorage.setItem("openReceivedSection", true);
+    }
+    setOpenReceiveSection(!openReceiveSection);
+    setDoMagic(false);
+    playMagic.current.currentTime = 0;
+    playMagic.current.pause();
+  };
+
+  useEffect(() => {
+    const openTabData = localStorage.getItem("openReceivedSection");
+    if (openTabData === "null" || openTabData === null) {
+      localStorage.setItem("openReceivedSection", false);
+    } else if (openTabData === "false" || openTabData === false) {
+      setOpenReceiveSection(false);
+    } else if (openTabData === "true" || openTabData === true) {
+      setOpenReceiveSection(true);
+    }
+  }, []);
 
   const handelCloseTab = () => {
     TextTabOpenAction(false);
@@ -33,11 +64,13 @@ const EnjoyText = ({ TextTabOpenAction }) => {
           ref={playMagic}
         ></video>
         <audio ref={playSound}>
-          <source src="/src/assets/flash-and-quicksilver-sound.mp3" type="audio/mp3"/>
+          <source
+            src="/src/assets/flash-and-quicksilver-sound.mp3"
+            type="audio/mp3"
+          />
         </audio>
       </div>
       <div className="EnjoyText_main_top">
-        
         <button
           className="EnjoyText_main_top_close_tab"
           onClick={() => handelCloseTab()}
@@ -61,56 +94,41 @@ const EnjoyText = ({ TextTabOpenAction }) => {
               <div className="EnjoyText_main_top_bottom_text_send_lighting_red_rotate"></div>
             </div>
             <div className="EnjoyText_main_top_bottom_text_send">
-              <div className="EnjoyText_main_top_bottom_text_send_p1">
-                <p>Share Your Text Here</p>
-              </div>
-              <div className="EnjoyText_main_top_bottom_text_send_p2">
-                <textarea
-                  className="enjoy_text_input_box"
-                  id=""
-                  placeholder="Don't worry Doctor Strange will help you to share your text in multiverse ..."
-                ></textarea>
-              </div>
-              <div className="enjoy_text_button_do_magic">
-                <div className="enjoy_text_button_do_magic_bg_video">
-                  {/* <video src="/src/assets/dr_strange_spark_x.mp4" ref={igniteSparks}></video> */}
-                  {/* <video src="/src/assets/" ref={igniteSparks}></video> */}
-                  {/* <img src="/src/assets/dr-strange-spark-x-unscreen.gif" alt="" /> */}
-                </div>
-                <div className="enjoy_text_button_do_magic_button">
-                  <button
-                    className="enjoy_text_open_portal_btn"
-                    onClick={() => actionDoMagic()}
-                  >
-                    Open Portal
-                  </button>
-                </div>
-              </div>
+              {openReceiveSection ? (
+                <ReceiveText />
+              ) : (
+                <ShareText actionDoMagic={(action) => actionDoMagic(action)} />
+              )}
             </div>
+
+            {disableWhileDoMagic ? null : (
+              <div
+                className={`EnjoyText_main_top_bottom_text_send_lighting_main_switch_context_btn `}
+              >
+                <button
+                  id="switch_share_receive_text"
+                  onClick={() => switchTheShareToReceive()}
+                  style={{
+                    transform: openReceiveSection ? "rotate(180deg)" : null,
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 -960 960 960"
+                    width="24px"
+                    fill="#CCCCCC"
+                  >
+                    <path d="M400-200 120-480l280-280v560Zm-60-145v-270L205-480l135 135Zm220 145v-560l280 280-280 280Z" />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="EnjoyText_main_top_bottom_animation_joints"></div>
           <div className="EnjoyText_main_top_bottom_text_receive">
-            <div className="EnjoyText_main_top_bottom_text_receive_title">
-                <p>Don't worry, we will take care of your laziness. You have three options - pick whichever you're comfortable with.</p>
-            </div>
-            <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box_main">
-              <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box">
-                <img src="/src/assets/QR_code.svg" alt="" />
-              </div>
-            </div>
-            <div className="EnjoyText_main_top_bottom_text_receive_code_preview">
-                <p>{225265}</p>
-            </div>
-            <div className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_main_box">
-                <div className="EnjoyText_main_top_bottom_text_receive_title_url_cpy">
-                  <span className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_url">https://vishalkumar1007.githu.io</span>
-                  <span className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_clipboard">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#967171"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/></svg>
-                  </span>
-                </div>
-            </div>
-            
+            <ReceiveText />
           </div>
         </div>
       </div>
