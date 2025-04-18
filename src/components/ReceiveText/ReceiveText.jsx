@@ -1,24 +1,63 @@
 import React, { useRef, useState } from "react";
 import "./receiveText.css";
 import QrCodeScanner from "../QrCodeScanner/QrCodeScanner";
-import scanImage from '../../assets/scan.png'
+import scanImage from "../../assets/scan.png";
+import { toast } from "sonner";
 
 const ReceiveText = () => {
   const [inputCodeSection, setInputCodeSection] = useState(true);
   const [scannerOpen, setScannerOpen] = useState(false);
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [qrCodeScanUrl, setQrCodeScanUrl] = useState("");
+  const [multiverseCode, setMultiverseCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
 
-  const handelScanner =(res)=>{
-    console.log('sc res : ',res)
-    setScannerOpen(res.action)
-  }
+  const handelScanner = (res) => {
+    setMultiverseCode(["", "", "", "", "", ""]);
+    // console.log('sc res : ',res)
+    setQrCodeScanUrl(res.url);
+    setScannerOpen(res.action);
+
+    const url = res.url;
+    const isIncludeCodeName = url.includes('multiversecode')
+    const getCode = url.substring((url.indexOf('=')+1),url.length);
+
+    const isPureCode = !getCode.split('').some(char => {
+      return !(char.charCodeAt() >= 48 && char.charCodeAt() <= 57);
+    });
+
+    console.log(isPureCode);
+    // console.log(isIncludeCodeName)
+    // console.log(getCode.length===6)
+    // console.log(isCodeHaveChar)
+
+    if((!isIncludeCodeName)||(getCode.length!==6)||(!isPureCode)){
+      toast.error(`Invalid QR Code`, {
+        style: {
+          color: "#d92525e1",
+        },
+      });
+      return;
+    }
+
+    const arrOfCode = []
+    for (const element of getCode) {
+      arrOfCode.push(element);
+    }
+    setMultiverseCode(arrOfCode);
+    toast.success(`QR Code Scanned Successfully`, {
+      style: {
+        color: "#19b030d0",
+      },
+    });
+  };
+
+
 
   const handleInputChange = (value, index) => {
     if (/^\d?$/.test(value)) {
-      const newOtp = [...otp];
+      const newOtp = [...multiverseCode];
       newOtp[index] = value;
-      setOtp(newOtp);
+      setMultiverseCode(newOtp);
 
       if (value && index < 5) {
         inputRefs.current[index + 1].focus();
@@ -28,14 +67,14 @@ const ReceiveText = () => {
 
   const handleKeyDown = (e, index) => {
     if (e.key === "Backspace") {
-      if (otp[index] === "") {
+      if (multiverseCode[index] === "") {
         if (index > 0) {
           inputRefs.current[index - 1].focus();
         }
       }
-      const newOtp = [...otp];
+      const newOtp = [...multiverseCode];
       newOtp[index] = "";
-      setOtp(newOtp);
+      setMultiverseCode(newOtp);
     }
   };
 
@@ -44,7 +83,7 @@ const ReceiveText = () => {
       {inputCodeSection ? (
         scannerOpen ? (
           <div className="receiveText_main_user_input_code_open_scanner">
-            <QrCodeScanner openScanner = {(res)=>handelScanner(res)}/>
+            <QrCodeScanner openScanner={(res) => handelScanner(res)} />
           </div>
         ) : (
           <div className="receiveText_main_user_input_code">
@@ -53,7 +92,7 @@ const ReceiveText = () => {
             </div>
             <div className="receiveText_main_user_input_code_scan_main">
               <div style={{ display: "flex", gap: "5px" }}>
-                {otp.map((digit, index) => (
+                {multiverseCode.map((digit, index) => (
                   <input
                     className="receiveText_main_user_input_code_scan_main_span"
                     key={index}
@@ -76,10 +115,14 @@ const ReceiveText = () => {
               <span className="or_option_span_line"></span>
             </div>
             <div className="receiveText_main_user_input_code_main">
-              <button className="receiveText_main_user_input_code_main_qr_scanner_btn" onClick={()=>setScannerOpen(true)}>
+              <button
+                className="receiveText_main_user_input_code_main_qr_scanner_btn"
+                onClick={() => setScannerOpen(true)}
+              >
                 <img src={scanImage} alt="" />
               </button>
             </div>
+            <p id="test_text">{qrCodeScanUrl}</p>
           </div>
         )
       ) : (

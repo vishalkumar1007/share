@@ -55,7 +55,7 @@ const Landing = () => {
       <div className="landing_main_arrange_width">
         <div className="landing_main_top">
             {/* <div className="landing_main_top_navbar"> */}
-                <div className="landing_main_top_navbar_vishal_profile">
+                <div className="landing_main_top_navbar_vishal_profile" onClick={()=>window.open('https://vishalkumar1007.github.io')}>
                     <div className="landing_main_top_navbar_vishal_profile_light"></div>
                     <img src={myProfileImage} alt="" />
                 </div>

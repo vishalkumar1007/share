@@ -2,13 +2,16 @@ import { useState } from "react";
 import "./ShareText.css";
 import { toast } from "sonner";
 import qrCodeDemoImage from '../../assets/QR_code.svg'
+import QRCode from "react-qr-code";
 
 const ShareText = ({ actionDoMagic }) => {
   const[openText,setOpenTex] = useState(true);
-  const [shareTextUrl , setShareTextUrl] = useState('https://vishalkumar1007.github.io')
+  const [shareTextUrl , setShareTextUrl] = useState('https://vishalkumar1007.github.io/share?multiversecode=332121')
 
   const actionDoMagicFun = () => {
-
+    setTimeout(()=>{
+      setOpenTex(false)
+    },4800 )
     actionDoMagic(true);
   };
 
@@ -62,6 +65,9 @@ const ShareText = ({ actionDoMagic }) => {
         </div>
       ) : (
         <div className="ShareText_main_preview_op_text">
+          <div className="ShareText_main_preview_op_text_back_btn" onClick={()=>setOpenTex(true)}>
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#B7B7B7"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+          </div>
           <div className="EnjoyText_main_top_bottom_text_receive_title">
             <p>
               Don't worry, we will take care of your laziness. You have three
@@ -70,7 +76,8 @@ const ShareText = ({ actionDoMagic }) => {
           </div>
           <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box_main">
             <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box">
-              <img src={qrCodeDemoImage} alt="" />
+              {/* <img src={qrCodeDemoImage} alt="" /> */}
+              <QRCode className="qr_code_image" value={shareTextUrl}/>
             </div>
           </div>
           <div className="EnjoyText_main_top_bottom_text_receive_code_preview">
