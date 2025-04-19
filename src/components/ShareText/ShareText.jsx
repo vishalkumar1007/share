@@ -1,21 +1,44 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import "./ShareText.css";
 import { toast } from "sonner";
-import qrCodeDemoImage from '../../assets/QR_code.svg'
 import QRCode from "react-qr-code";
 
 const ShareText = ({ actionDoMagic }) => {
-  const[openText,setOpenTex] = useState(true);
-  const [shareTextUrl , setShareTextUrl] = useState('https://vishalkumar1007.github.io/share?multiversecode=332121')
+  const [openText, setOpenTex] = useState(true);
+  const[userInputData,setUserInputData] = useState('');
+  const userInputRef = useRef();
+  const [shareTextUrl, setShareTextUrl] = useState(
+    "https://vishalkumar1007.github.io/share?multiversecode=332121"
+  );
+ 
+  const userInputTextAuth = ()=>{
+    if(userInputData===''){
+      toast.error(`Input should not be empty`, {
+        style: {
+          color: "#d92525e1",
+        },
+      });
+      userInputRef.current.focus();
+      return false;
+    }
+    return true;
+  }
 
   const actionDoMagicFun = () => {
-    setTimeout(()=>{
-      setOpenTex(false)
-    },4800 )
+
+    const isInputValid = userInputTextAuth();
+
+    if(!isInputValid){
+      return;
+    }
+
+    setTimeout(() => {
+      setOpenTex(false);
+    }, 4800);
     actionDoMagic(true);
   };
 
-  const copyToClipBoard = async (text)=>{
+  const copyToClipBoard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
       toast.success(`multiverse url copy successfully 👍`, {
@@ -29,30 +52,28 @@ const ShareText = ({ actionDoMagic }) => {
           color: "#d92525e1",
         },
       });
-      console.log('error while copy text ', err);
+      console.log("error while copy text ", err);
     }
-  } 
+  };
 
   return (
     <div className="ShareText_main">
-      {openText? (
+      {openText ? (
         <div className="ShareText_main_input_text">
           <div className="EnjoyText_main_top_bottom_text_send_p1">
             <p>Share Your Text Here</p>
           </div>
           <div className="EnjoyText_main_top_bottom_text_send_p2">
             <textarea
+              ref={userInputRef}
               className="enjoy_text_input_box"
               id=""
+              onChange={(e)=>setUserInputData(e.target.value)}
               placeholder="Don't worry Doctor Strange will help you to share your text in multiverse ..."
             ></textarea>
           </div>
           <div className="enjoy_text_button_do_magic">
-            <div className="enjoy_text_button_do_magic_bg_video">
-              {/* <video src="/src/assets/dr_strange_spark_x.mp4" ref={igniteSparks}></video> */}
-              {/* <video src="/src/assets/" ref={igniteSparks}></video> */}
-              {/* <img src="/src/assets/dr-strange-spark-x-unscreen.gif" alt="" /> */}
-            </div>
+            <div className="enjoy_text_button_do_magic_bg_video"></div>
             <div className="enjoy_text_button_do_magic_button">
               <button
                 className="enjoy_text_open_portal_btn"
@@ -65,8 +86,19 @@ const ShareText = ({ actionDoMagic }) => {
         </div>
       ) : (
         <div className="ShareText_main_preview_op_text">
-          <div className="ShareText_main_preview_op_text_back_btn" onClick={()=>setOpenTex(true)}>
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#B7B7B7"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+          <div
+            className="ShareText_main_preview_op_text_back_btn"
+            onClick={() => setOpenTex(true)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#B7B7B7"
+            >
+              <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+            </svg>
           </div>
           <div className="EnjoyText_main_top_bottom_text_receive_title">
             <p>
@@ -77,7 +109,7 @@ const ShareText = ({ actionDoMagic }) => {
           <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box_main">
             <div className="EnjoyText_main_top_bottom_text_receive_title_qr_box">
               {/* <img src={qrCodeDemoImage} alt="" /> */}
-              <QRCode className="qr_code_image" value={shareTextUrl}/>
+              <QRCode className="qr_code_image" value={shareTextUrl} />
             </div>
           </div>
           <div className="EnjoyText_main_top_bottom_text_receive_code_preview">
@@ -88,7 +120,10 @@ const ShareText = ({ actionDoMagic }) => {
               <span className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_url">
                 {shareTextUrl}
               </span>
-              <span className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_clipboard" onClick={()=>copyToClipBoard(shareTextUrl)}>
+              <span
+                className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_clipboard"
+                onClick={() => copyToClipBoard(shareTextUrl)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   height="24px"

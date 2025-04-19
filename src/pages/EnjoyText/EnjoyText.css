@@ -115,11 +115,6 @@
     width: 38%;
     height: 93%;
     max-height: 700px;
-    /* width: 120px; */
-    /* height: 120px; */
-    /* background-color: red; */
-    /* position: absolute; */
-    /* z-index: -1; */
     position: relative;
     display: flex;
     justify-content: center;
@@ -132,10 +127,12 @@
 .EnjoyText_main_top_bottom_text_send{
     background-color: #16161618;
     /* background-color: rebeccapurple; */
+    padding: 10px;
+    box-sizing: border-box;
     backdrop-filter: blur(25px);
     width: 100%;
     height: 100%;
-    border: 2px solid #242424b9;
+    border: 2px solid #1f1e1e8a;
     /* border: 2px solid #de0c0c6d; */
     border-radius: 10px;
     /* margin: 10px; */
@@ -226,9 +223,23 @@
     width: 100%;
     height: 100%;
 }
+#EnjoyText_main_top_bottom_text_send_mobile{
+    display: none;
+}
+#EnjoyText_main_top_bottom_text_send_desktop{
+    display: block;
+}
+
 
 
 @media (max-width: 788px) {
+    #EnjoyText_main_top_bottom_text_send_mobile{
+        display: block;
+    }
+    #EnjoyText_main_top_bottom_text_send_desktop{
+        display: none;
+    }
+
     .EnjoyText_main_top_bottom_text_send_lighting_main_switch_context_btn{
         display: block;
         position: absolute;

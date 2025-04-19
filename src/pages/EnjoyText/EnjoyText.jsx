@@ -94,12 +94,15 @@ const EnjoyText = ({ TextTabOpenAction }) => {
             <div className="EnjoyText_main_top_bottom_text_send_lighting">
               <div className="EnjoyText_main_top_bottom_text_send_lighting_red_rotate"></div>
             </div>
-            <div className="EnjoyText_main_top_bottom_text_send">
+            <div className="EnjoyText_main_top_bottom_text_send" id="EnjoyText_main_top_bottom_text_send_mobile">
               {openReceiveSection ? (
                 <ReceiveText />
               ) : (
                 <ShareText actionDoMagic={(action) => actionDoMagic(action)} />
               )}
+            </div>
+            <div className="EnjoyText_main_top_bottom_text_send" id="EnjoyText_main_top_bottom_text_send_desktop">
+              <ShareText actionDoMagic={(action) => actionDoMagic(action)} />
             </div>
 
             {disableWhileDoMagic ? null : (
