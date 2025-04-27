@@ -11,10 +11,11 @@ const EnjoyText = ({ TextTabOpenAction }) => {
   const [disableWhileDoMagic, setDisableWhileDoMagic] = useState(false);
   const playMagic = useRef(null);
   const playSound = useRef(null);
-
   const [doMagic, setDoMagic] = useState(false);
+
   const actionDoMagic = (action) => {
     if (!action) {
+      setDoMagic(false);
       return;
     }
 

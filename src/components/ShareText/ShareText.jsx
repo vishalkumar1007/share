@@ -5,14 +5,13 @@ import QRCode from "react-qr-code";
 
 const ShareText = ({ actionDoMagic }) => {
   const [openText, setOpenTex] = useState(true);
-  const[userInputData,setUserInputData] = useState('');
+  const [userInputData, setUserInputData] = useState("");
   const userInputRef = useRef();
-  const [shareTextUrl, setShareTextUrl] = useState(
-    "https://vishalkumar1007.github.io/share?multiversecode=332121"
-  );
- 
-  const userInputTextAuth = ()=>{
-    if(userInputData===''){
+  const [shareTextUrl, setShareTextUrl] = useState('');
+  const [multiverseCode, setMultiverseCode] = useState('');
+
+  const userInputTextAuth = () => {
+    if (userInputData === "") {
       toast.error(`Input should not be empty`, {
         style: {
           color: "#d92525e1",
@@ -22,20 +21,88 @@ const ShareText = ({ actionDoMagic }) => {
       return false;
     }
     return true;
-  }
+  };
 
-  const actionDoMagicFun = () => {
+  const apiRequestForSaveData = async () => {
+    try {
+      const api = "http://localhost:8080/api/TextMultiverse/universalTextSave";
+      const resData = await fetch(api, {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({ textData: userInputData }),
+      });
 
+      
+      if (!resData.ok) {
+        if (resData.status === 429) {
+          toast.error(`Too many request`, {
+            style: {
+              color: "#d92525e1",
+            },
+          });
+          return false;
+        }else if (resData.status === 500) {
+          toast.error(`Internal Server Error`, {
+            style: {
+              color: "#d92525e1",
+            },
+          });
+          return false;
+        }else{
+          toast.error(`Response error , check your internet`, {
+            style: {
+              color: "#d92525e1",
+            },
+          });
+          return false;
+        }
+        
+      }
+      
+      const resJsonData = await resData.json();
+      
+      if (resData.status === 200 && resJsonData.responseStatus==='success') {
+        const codeUrl = `https://vishalkumar1007.github.io/share?multiversecode=${resJsonData.code}`;
+        setShareTextUrl(codeUrl);
+        setMultiverseCode(resJsonData.code);
+        return true;
+      }else{
+        toast.error(`Something went wrong`, {
+          style: {
+            color: "#d92525e1",
+          },
+        });
+        return false;
+      }
+    } catch (error) {
+      console.log(`Error while sending data to server : ${error}`);
+      toast.error(`Error while sending data to server`, {
+        style: {
+          color: "#d92525e1",
+        },
+      });
+      return false;
+    }
+  };
+
+  const actionDoMagicFun = async() => {
     const isInputValid = userInputTextAuth();
-
-    if(!isInputValid){
+    if (!isInputValid) {
       return;
     }
-
+    const apiStatus = await apiRequestForSaveData();
+    if(!apiStatus){
+      return;
+    }
+    
+    actionDoMagic(false);
     setTimeout(() => {
       setOpenTex(false);
     }, 4800);
     actionDoMagic(true);
+    setUserInputData("");
   };
 
   const copyToClipBoard = async (text) => {
@@ -68,7 +135,7 @@ const ShareText = ({ actionDoMagic }) => {
               ref={userInputRef}
               className="enjoy_text_input_box"
               id=""
-              onChange={(e)=>setUserInputData(e.target.value)}
+              onChange={(e) => setUserInputData(e.target.value)}
               placeholder="Don't worry Doctor Strange will help you to share your text in multiverse ..."
             ></textarea>
           </div>
@@ -113,7 +180,7 @@ const ShareText = ({ actionDoMagic }) => {
             </div>
           </div>
           <div className="EnjoyText_main_top_bottom_text_receive_code_preview">
-            <p>{225265}</p>
+            <p>{multiverseCode}</p>
           </div>
           <div className="EnjoyText_main_top_bottom_text_receive_title_url_cpy_main_box">
             <div className="EnjoyText_main_top_bottom_text_receive_title_url_cpy">

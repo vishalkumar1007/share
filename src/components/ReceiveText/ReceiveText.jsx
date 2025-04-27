@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./receiveText.css";
 import QrCodeScanner from "../QrCodeScanner/QrCodeScanner";
 import scanImage from "../../assets/scan.png";
@@ -7,8 +7,7 @@ import { toast } from "sonner";
 const ReceiveText = () => {
   const [inputCodeSection, setInputCodeSection] = useState(true);
   const [scannerOpen, setScannerOpen] = useState(false);
-  const [qrCodeScanUrl, setQrCodeScanUrl] = useState("");
-  const [codeInputError , setCodeInputError] = useState(false);
+  const [codeInputError, setCodeInputError] = useState(false);
   const [multiverseCode, setMultiverseCode] = useState([
     "",
     "",
@@ -17,12 +16,12 @@ const ReceiveText = () => {
     "",
     "",
   ]);
-  const [userCodeOutput, setUserCodeOutput] = useState("you are a gay");
+  const[autoFetchEnable,setAutoFetchEnable] = useState(false);
+
+  const [userCodeOutput, setUserCodeOutput] = useState("");
   const inputRefs = useRef([]);
 
   const authInputCodeValid = () => {
-    console.log(multiverseCode);
-
     for (const element of multiverseCode) {
       if (element === "" || element.length !== 1 || /a-zA-Z/.test(element)) {
         toast.error(`Invalid Multiverse Code`, {
@@ -34,18 +33,90 @@ const ReceiveText = () => {
         return false;
       }
     }
-    setCodeInputError(false)
+    setCodeInputError(false);
     return true;
   };
 
-  const actionToFetchTextFromMultiverse = () => {
-    if (!authInputCodeValid()) {
+  const actionToFetchTextFromMultiverse = async() => {
+    let multiverseArrangeCode = '';
+    multiverseCode.forEach((element)=>{
+      multiverseArrangeCode+=element;
+    })
+
+    
+    if (!authInputCodeValid() || multiverseArrangeCode.length!==6) {
       return;
     }
     
-    setTimeout(() => {
-      setInputCodeSection(false)
-    }, 1000);
+    try {
+      const universalTextApi = `http://localhost:8080/api/TextMultiverse/universalTextData?multiverseCode=${multiverseArrangeCode}`;
+      const fetchDataRes = await fetch(universalTextApi,{
+        method:'GET',
+        headers:{
+          "Content-type":"application/json"
+        }
+      })
+
+      
+      if (!fetchDataRes.ok) {
+        if (fetchDataRes.status === 404) {
+          toast.error(`Invalid Multiverse Code`, {
+            style: {
+              color: "#d92525e1",
+            },
+          });
+          return;
+        } else if (fetchDataRes.status === 429) {
+          toast.error(`Too Many Request, port close`, {
+            style: {
+              color: "#d92525e1",
+            },
+          });
+          return;
+        } else if (fetchDataRes.status === 500) {
+          toast.error(`Internal server error`, {
+            style: {
+              color: "#d92525e1",
+            },
+          });
+          return;
+        }else{
+          toast.error(`Response error , check your internet`, {
+            style: {
+              color: "#d92525e1",
+            },
+          });
+        }
+      }
+      
+      const fetchJsonDataRes = await fetchDataRes.json();
+      
+      if (fetchDataRes.status === 200 && fetchJsonDataRes.responseStatus==='success') {
+        setUserCodeOutput(fetchJsonDataRes.codeMappedText);
+        setInputCodeSection(false);
+        setMultiverseCode(["", "", "", "", "", ""]);
+        toast.success(`Multiverse Port Found successfully 👍`, {
+          style: {
+            color: "#19b030d0",
+          },
+        });
+      }else{
+        toast.error(`Something went wrong`, {
+          style: {
+            color: "#d92525e1",
+          },
+        });
+      } 
+      
+    } catch (error) {
+      console.log(`Error while fetching data from server : ${error}`);
+      toast.error(`Error while fetch data from server`, {
+        style: {
+          color: "#d92525e1",
+        },
+      });
+    }
+
   };
 
   const copyResultText = async () => {
@@ -76,13 +147,11 @@ const ReceiveText = () => {
 
   const handelScanner = async (res) => {
     setMultiverseCode(["", "", "", "", "", ""]);
-    // console.log('sc res : ',res)
-    setQrCodeScanUrl(res.url);
     setScannerOpen(res.action);
 
     const url = res.url;
 
-    if(url.length===0){
+    if (url.length === 0) {
       return;
     }
 
@@ -106,16 +175,26 @@ const ReceiveText = () => {
     for (const element of getCode) {
       arrOfCode.push(element);
     }
-    // console.log('aar code : ',arrOfCode)
     setMultiverseCode(arrOfCode);
-    // console.log('aar code 2 : ',multiverseCode)
     toast.success(`QR Code Scanned Successfully`, {
       style: {
         color: "#19b030d0",
       },
     });
-    // actionToFetchTextFromMultiverse();
+    setAutoFetchEnable(true);
   };
+
+  useEffect(() => {
+    const isValidMultiverseCode = 
+    autoFetchEnable && multiverseCode.length === 6 &&
+      multiverseCode.every(char => char >= '0' && char <= '9');
+  
+    if (isValidMultiverseCode) {
+      setAutoFetchEnable(false);
+      actionToFetchTextFromMultiverse();
+    }
+  }, [autoFetchEnable, multiverseCode]);
+  
 
   const handleInputChange = (value, index) => {
     if (/^\d?$/.test(value)) {
@@ -159,7 +238,9 @@ const ReceiveText = () => {
                 {multiverseCode.map((digit, index) => (
                   <input
                     className="receiveText_main_user_input_code_scan_main_span"
-                    style={{border:codeInputError?'1px solid #ac0c0c78':null}}
+                    style={{
+                      border: codeInputError ? "1px solid #ac0c0c78" : null,
+                    }}
                     key={index}
                     ref={(el) => (inputRefs.current[index] = el)}
                     type="text"
@@ -167,7 +248,7 @@ const ReceiveText = () => {
                     maxLength={1}
                     onChange={(e) => handleInputChange(e.target.value, index)}
                     onKeyDown={(e) => handleKeyDown(e, index)}
-                    onFocus={()=>setCodeInputError(false)}
+                    onFocus={() => setCodeInputError(false)}
                   />
                 ))}
               </div>
@@ -190,13 +271,23 @@ const ReceiveText = () => {
                 <img src={scanImage} alt="" />
               </button>
             </div>
-            <p id="test_text">{qrCodeScanUrl}</p>
           </div>
         )
       ) : (
         <div className="receiveText_main_received_text_preview_box">
-          <div className="receiveText_main_received_text_preview_box_nav_back" onClick={()=>setInputCodeSection(true)}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#B7B7B7"><path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z"/></svg>
+          <div
+            className="receiveText_main_received_text_preview_box_nav_back"
+            onClick={() => setInputCodeSection(true)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="#B7B7B7"
+            >
+              <path d="m313-440 224 224-57 56-320-320 320-320 57 56-224 224h487v80H313Z" />
+            </svg>
           </div>
           <button
             id="receiveText_main_received_text_preview_box_main_box_copy_content"
