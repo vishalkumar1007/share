@@ -7,8 +7,9 @@ const ShareText = ({ actionDoMagic }) => {
   const [openText, setOpenTex] = useState(true);
   const [userInputData, setUserInputData] = useState("");
   const userInputRef = useRef();
-  const [shareTextUrl, setShareTextUrl] = useState('');
-  const [multiverseCode, setMultiverseCode] = useState('');
+  const [shareTextUrl, setShareTextUrl] = useState("Something went wrong , try again after some time");
+  const [multiverseCode, setMultiverseCode] = useState("Error Code");
+  const [isLoading, setIsLoading] = useState(false);
 
   const userInputTextAuth = () => {
     if (userInputData === "") {
@@ -34,7 +35,6 @@ const ShareText = ({ actionDoMagic }) => {
         body: JSON.stringify({ textData: userInputData }),
       });
 
-      
       if (!resData.ok) {
         if (resData.status === 429) {
           toast.error(`Too many request`, {
@@ -43,14 +43,14 @@ const ShareText = ({ actionDoMagic }) => {
             },
           });
           return false;
-        }else if (resData.status === 500) {
+        } else if (resData.status === 500) {
           toast.error(`Internal Server Error`, {
             style: {
               color: "#d92525e1",
             },
           });
           return false;
-        }else{
+        } else {
           toast.error(`Response error , check your internet`, {
             style: {
               color: "#d92525e1",
@@ -58,17 +58,16 @@ const ShareText = ({ actionDoMagic }) => {
           });
           return false;
         }
-        
       }
-      
+
       const resJsonData = await resData.json();
-      
-      if (resData.status === 200 && resJsonData.responseStatus==='success') {
+
+      if (resData.status === 200 && resJsonData.responseStatus === "success") {
         const codeUrl = `https://vishalkumar1007.github.io/share?multiversecode=${resJsonData.code}`;
         setShareTextUrl(codeUrl);
         setMultiverseCode(resJsonData.code);
         return true;
-      }else{
+      } else {
         toast.error(`Something went wrong`, {
           style: {
             color: "#d92525e1",
@@ -87,21 +86,25 @@ const ShareText = ({ actionDoMagic }) => {
     }
   };
 
-  const actionDoMagicFun = async() => {
+  const actionDoMagicFun = async () => {
     const isInputValid = userInputTextAuth();
     if (!isInputValid) {
       return;
     }
-    const apiStatus = await apiRequestForSaveData();
-    if(!apiStatus){
-      return;
-    }
-    
     actionDoMagic(false);
     setTimeout(() => {
-      setOpenTex(false);
-    }, 4800);
+        setOpenTex(false);
+    }, 4500);
     actionDoMagic(true);
+
+    setIsLoading(true);
+    const apiStatus = await apiRequestForSaveData();
+    setIsLoading(false);
+    if (!apiStatus) {
+      return;
+    }
+
+
     setUserInputData("");
   };
 
@@ -151,7 +154,7 @@ const ShareText = ({ actionDoMagic }) => {
             </div>
           </div>
         </div>
-      ) : (
+      ) : isLoading ? <div className="lds-ripple"><div></div><div></div></div> : (
         <div className="ShareText_main_preview_op_text">
           <div
             className="ShareText_main_preview_op_text_back_btn"
