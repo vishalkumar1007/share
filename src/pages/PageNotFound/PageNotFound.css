@@ -1,0 +1,35 @@
+.pageNotFound_main {
+  background-color: #141414;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pageNotFound_box {
+    /* background-color: rgb(2, 139, 0); */
+  text-align: left;
+  max-width: 800px;
+  /* padding: 20px; */
+  color: #44474a;
+}
+
+.pageNotFound_icon {
+    /* background-color: darkblue; */
+  font-size: 60px;
+  color: #5f6368;
+  margin-bottom: 30px;
+}
+
+.pageNotFound_text h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.pageNotFound_text p {
+  font-size: 13px;
+  line-height: 2;
+  color: #818387;
+}

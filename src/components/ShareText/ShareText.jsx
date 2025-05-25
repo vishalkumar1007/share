@@ -2,12 +2,17 @@ import { useRef, useState } from "react";
 import "./ShareText.css";
 import { toast } from "sonner";
 import QRCode from "react-qr-code";
+import { useDispatch } from "react-redux";
+import { fetchUserProfileDataThunk } from "../../reduxSetup/features/apiCollections/userProfileData/centralExportUserProfileData";
 
 const ShareText = ({ actionDoMagic }) => {
+  const dispatch = useDispatch();
   const [openText, setOpenTex] = useState(true);
   const [userInputData, setUserInputData] = useState("");
   const userInputRef = useRef();
-  const [shareTextUrl, setShareTextUrl] = useState("Something went wrong , try again after some time");
+  const [shareTextUrl, setShareTextUrl] = useState(
+    "Something went wrong , try again after some time"
+  );
   const [multiverseCode, setMultiverseCode] = useState("Error Code");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -27,11 +32,16 @@ const ShareText = ({ actionDoMagic }) => {
   const apiRequestForSaveData = async () => {
     try {
       const api = "http://localhost:8080/api/TextMultiverse/universalTextSave";
+      const token = localStorage.getItem("authToken");
+
+      const headers = {
+        "Content-type": "application/json",
+        ...(token && { authorization: `Bearer ${token}` }),
+      };
+
       const resData = await fetch(api, {
         method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
+        headers,
         body: JSON.stringify({ textData: userInputData }),
       });
 
@@ -66,6 +76,7 @@ const ShareText = ({ actionDoMagic }) => {
         const codeUrl = `https://vishalkumar1007.github.io/share?multiversecode=${resJsonData.code}`;
         setShareTextUrl(codeUrl);
         setMultiverseCode(resJsonData.code);
+        dispatch(fetchUserProfileDataThunk());
         return true;
       } else {
         toast.error(`Something went wrong`, {
@@ -93,7 +104,7 @@ const ShareText = ({ actionDoMagic }) => {
     }
     actionDoMagic(false);
     setTimeout(() => {
-        setOpenTex(false);
+      setOpenTex(false);
     }, 4500);
     actionDoMagic(true);
 
@@ -103,7 +114,6 @@ const ShareText = ({ actionDoMagic }) => {
     if (!apiStatus) {
       return;
     }
-
 
     setUserInputData("");
   };
@@ -154,7 +164,12 @@ const ShareText = ({ actionDoMagic }) => {
             </div>
           </div>
         </div>
-      ) : isLoading ? <div className="lds-ripple"><div></div><div></div></div> : (
+      ) : isLoading ? (
+        <div className="lds-ripple">
+          <div></div>
+          <div></div>
+        </div>
+      ) : (
         <div className="ShareText_main_preview_op_text">
           <div
             className="ShareText_main_preview_op_text_back_btn"

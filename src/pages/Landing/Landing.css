@@ -1,6 +1,6 @@
 /* #121111 */
 .landing_main{
-    /* background-color: red; */
+    background-color: black;
     width: 100vw;
     height: 100dvh;
     display: flex;
@@ -135,6 +135,7 @@
     margin:15px 0px 40px 0px ;
     font-weight: 600;
     opacity: 0.9;
+    cursor: pointer;
 }
 .landing_main_bottom_intro_text {
     /* background-color: rgba(184, 135, 11, 0.882); */
@@ -244,6 +245,28 @@
     border: 1px solid #db8229;
     color: #db8229;
     box-shadow: 0 0 10px #db8229;
+}
+
+.check_your_history{
+    background-color: rgb(15, 15, 15);
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    z-index: 1;
+    bottom: 20px;
+    right: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(72, 74, 74, 0.758) 0px 0px 20px;
+}
+.check_your_history svg{
+    width: 20px;
+    height: 20px;
+    fill: #878787;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 
