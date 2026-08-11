@@ -1,35 +1,39 @@
 .pageNotFound_main {
-  background-color: #141414;
-  width: 100vw;
-  height: 100vh;
+  background: transparent;
+  width: 100%;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: var(--font);
 }
 
 .pageNotFound_box {
-    /* background-color: rgb(2, 139, 0); */
   text-align: left;
   max-width: 800px;
-  /* padding: 20px; */
-  color: #44474a;
+  color: var(--text-body);
 }
 
 .pageNotFound_icon {
-    /* background-color: darkblue; */
-  font-size: 60px;
-  color: #5f6368;
+  font-size: 64px;
+  font-weight: 800;
+  color: var(--accent-1);
   margin-bottom: 30px;
+  text-shadow: 0 0 34px rgba(var(--accent-1-rgb), 0.4);
 }
 
 .pageNotFound_text h1 {
   font-size: 24px;
   margin-bottom: 10px;
+  color: var(--text-strong);
 }
 
 .pageNotFound_text p {
   font-size: 13px;
   line-height: 2;
-  color: #818387;
+  color: var(--text-muted);
+}
+
+.pageNotFound_text strong {
+  color: var(--accent-1);
 }

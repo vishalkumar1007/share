@@ -17,7 +17,6 @@ import AdminLogin from "./pages/Admin/AdminLogin";
 import AdminSettings from "./pages/Admin/AdminSettings";
 import TypesRedirect from "./pages/Share/TypesRedirect";
 import ReceiveRedirect from "./pages/Receive/Receive";
-import { ThemeProvider } from "./theme/ThemeContext.jsx";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
@@ -50,7 +49,6 @@ function App() {
   ) : (
     <div className="App">
       {allowAccessContent ? (
-        <ThemeProvider>
           <BrowserRouter basename="/share">
             <Routes>
               <Route path="/" element={<Landing />} />
@@ -76,7 +74,6 @@ function App() {
               <Route path="*" element={<PageNotFound ipData={userIpData} />} />
             </Routes>
           </BrowserRouter>
-        </ThemeProvider>
       ) : (
         <PageNotFound ipData={userIpData} />
       )}
