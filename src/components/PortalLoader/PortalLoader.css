@@ -1,0 +1,91 @@
+.portal_loader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  background: var(--app-bg-solid);
+  background-image: radial-gradient(
+      520px 520px at 50% 40%,
+      rgba(var(--accent-1-rgb), 0.16),
+      transparent 70%
+    ),
+    linear-gradient(160deg, #0d0c0c 0%, #141012 45%, #191214 100%);
+}
+
+.portal_loader_stage {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  display: grid;
+  place-items: center;
+}
+
+.portal_loader_ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(var(--accent-1-rgb), 0.28);
+}
+
+.portal_loader_ring--outer {
+  inset: 0;
+  box-shadow: 0 0 40px rgba(var(--accent-1-rgb), 0.2);
+  animation: portalSpin 4.5s linear infinite;
+}
+
+.portal_loader_ring--mid {
+  inset: 18px;
+  border-color: rgba(var(--live-rgb), 0.28);
+  animation: portalSpin 3.2s linear infinite reverse;
+}
+
+.portal_loader_ring--inner {
+  inset: 36px;
+  border-color: rgba(var(--accent-3-rgb), 0.35);
+  animation: portalSpin 2.4s linear infinite;
+}
+
+.portal_loader_core {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-grad);
+  box-shadow: 0 0 28px rgba(var(--accent-1-rgb), 0.75);
+  animation: portalPulse 1.4s ease-in-out infinite;
+}
+
+.portal_loader_brand {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text-strong);
+}
+
+.portal_loader_sub {
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+@keyframes portalSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes portalPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(0.72);
+    opacity: 0.65;
+  }
+}

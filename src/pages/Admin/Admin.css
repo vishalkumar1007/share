@@ -1,0 +1,129 @@
+.admin_page {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+  background: var(--app-bg);
+}
+
+.admin_card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px;
+  border-radius: 18px;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-shadow);
+}
+
+.admin_card--wide {
+  max-width: 720px;
+}
+
+.admin_card_head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.admin_kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-1);
+}
+
+.admin_card h1 {
+  margin: 6px 0 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--text-strong);
+}
+
+.admin_card p,
+.admin_muted {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.5;
+  font-size: 0.92rem;
+}
+
+.admin_form,
+.admin_card form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.admin_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.admin_card label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+.admin_card input[type="email"],
+.admin_card input[type="password"],
+.admin_card input[type="text"],
+.admin_card input[type="number"],
+.admin_card input:not([type="checkbox"]) {
+  border-radius: 12px;
+  border: 1px solid var(--glass-border);
+  background: var(--dash-surface, rgba(255, 255, 255, 0.03));
+  color: var(--text-strong);
+  padding: 11px 12px;
+  font: inherit;
+}
+
+.admin_check {
+  flex-direction: row !important;
+  align-items: center;
+  gap: 8px !important;
+}
+
+.admin_actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.admin_btn {
+  border: none;
+  border-radius: 999px;
+  padding: 11px 18px;
+  background: var(--accent-grad, var(--accent-1));
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin_btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.admin_btn--ghost {
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  color: var(--text-strong);
+}
+
+@media (max-width: 720px) {
+  .admin_grid {
+    grid-template-columns: 1fr;
+  }
+}

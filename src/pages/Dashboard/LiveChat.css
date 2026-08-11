@@ -1,0 +1,2 @@
+/* Re-export chat styles for LiveChat import path */
+@import "../Chat/Chat.css";
