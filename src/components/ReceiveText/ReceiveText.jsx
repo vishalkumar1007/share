@@ -3,6 +3,7 @@ import "./receiveText.css";
 import QrCodeScanner from "../QrCodeScanner/QrCodeScanner";
 import scanImage from "../../assets/scan.png";
 import { toast } from "sonner";
+import { API_BASE } from "../../api/client.js";
 
 const ReceiveText = () => {
   const [inputCodeSection, setInputCodeSection] = useState(true);
@@ -49,7 +50,7 @@ const ReceiveText = () => {
     }
     
     try {
-      const universalTextApi = `http://localhost:8080/api/TextMultiverse/universalTextData?multiverseCode=${multiverseArrangeCode}`;
+      const universalTextApi = `${API_BASE}/api/TextMultiverse/universalTextData?multiverseCode=${multiverseArrangeCode}`;
       const fetchDataRes = await fetch(universalTextApi,{
         method:'GET',
         headers:{

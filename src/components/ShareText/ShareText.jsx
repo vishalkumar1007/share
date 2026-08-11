@@ -4,6 +4,7 @@ import { toast } from "sonner";
 import QRCode from "react-qr-code";
 import { useDispatch } from "react-redux";
 import { fetchUserProfileDataThunk } from "../../reduxSetup/features/apiCollections/userProfileData/centralExportUserProfileData";
+import { API_BASE } from "../../api/client.js";
 
 const ShareText = ({ actionDoMagic }) => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const ShareText = ({ actionDoMagic }) => {
 
   const apiRequestForSaveData = async () => {
     try {
-      const api = "http://localhost:8080/api/TextMultiverse/universalTextSave";
+      const api = `${API_BASE}/api/TextMultiverse/universalTextSave`;
       const token = localStorage.getItem("authToken");
 
       const headers = {

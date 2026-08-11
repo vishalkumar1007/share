@@ -1,17 +1,6 @@
-const PROD_API = "https://share-backend-jade.vercel.app";
-
-const resolveDefaultApiBase = () => {
-  if (typeof window !== "undefined") {
-    const host = window.location.hostname || "";
-    if (host.endsWith("github.io") || host.endsWith("vercel.app")) {
-      return PROD_API;
-    }
-  }
-  return "http://localhost:8080";
-};
-
+/** Production Multiverse API (Vercel). */
 export const API_BASE = (
-  import.meta.env.VITE_API_BASE_URL || resolveDefaultApiBase()
+  import.meta.env.VITE_API_BASE_URL || "https://share-backend-jade.vercel.app"
 ).replace(/\/$/, "");
 
 export const FRONTEND_ORIGIN =
