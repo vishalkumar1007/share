@@ -31,6 +31,9 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_API_BASE_URL: https://share-backend-jade.vercel.app
+          VITE_BASE_PATH: /share
         run: npm run build
 
       - name: Upload Pages artifact
