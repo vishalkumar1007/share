@@ -4,7 +4,7 @@ import { api } from "../../api/client.js";
 
 const VALID = new Set(["text", "image", "file", "audio"]);
 
-/** Legacy /receive → /{type}?mode=receive (resolve type from code when possible). */
+/** Legacy /receive → /{type}/:code (resolve type from code when possible). */
 const ReceiveRedirect = () => {
   const location = useLocation();
   const code = useMemo(() => {
@@ -44,13 +44,16 @@ const ReceiveRedirect = () => {
   if (!type) return null;
 
   const params = new URLSearchParams(location.search);
-  params.set("mode", "receive");
-  if (code && !params.get("multiversecode")) {
-    params.set("multiversecode", code);
-  }
+  params.delete("mode");
+  params.delete("multiversecode");
+  params.delete("code");
+  params.delete("id");
   const qs = params.toString();
+  const path = code
+    ? `/${type}/${encodeURIComponent(code)}`
+    : `/${type}`;
 
-  return <Navigate to={`/${type}${qs ? `?${qs}` : ""}`} replace />;
+  return <Navigate to={`${path}${qs ? `?${qs}` : ""}`} replace />;
 };
 
 export default ReceiveRedirect;

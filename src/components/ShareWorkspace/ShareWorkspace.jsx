@@ -486,9 +486,18 @@ const ShareWorkspace = ({
         url.searchParams.get("multiversecode") ||
         url.searchParams.get("code") ||
         url.searchParams.get("id");
-      if (fromQuery) {
-        setCode(fromQuery);
-        fetchShare(fromQuery);
+      const parts = url.pathname.split("/").filter(Boolean);
+      const typeIdx = parts.findIndex((p) =>
+        ["text", "image", "file", "audio"].includes(p)
+      );
+      const fromPath =
+        typeIdx >= 0 && parts[typeIdx + 1]
+          ? decodeURIComponent(parts[typeIdx + 1])
+          : "";
+      const scannedCode = fromQuery || fromPath;
+      if (scannedCode) {
+        setCode(scannedCode);
+        fetchShare(scannedCode);
         return;
       }
     } catch {

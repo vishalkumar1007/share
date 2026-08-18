@@ -286,7 +286,7 @@ export const uploadFile = async (file) => {
 
 export const buildReceiveUrl = (shareId, type = "text") => {
   const path = ["text", "image", "file", "audio"].includes(type) ? type : "text";
-  return `${FRONTEND_ORIGIN}/${path}?mode=receive&multiversecode=${encodeURIComponent(shareId)}`;
+  return `${FRONTEND_ORIGIN}/${path}/${encodeURIComponent(shareId)}`;
 };
 
 export const buildChatUrl = (roomCode) =>

@@ -18,8 +18,15 @@ const formatRemaining = (ms) => {
 const shortUrl = (url) => {
   try {
     const u = new URL(url);
-    const code = u.searchParams.get("multiversecode");
-    if (code) return `multiverse.v/${code}`;
+    const queryCode = u.searchParams.get("multiversecode");
+    if (queryCode) return `multiverse.v/${queryCode}`;
+    const parts = u.pathname.split("/").filter(Boolean);
+    const typeIdx = parts.findIndex((p) =>
+      ["text", "image", "file", "audio"].includes(p)
+    );
+    if (typeIdx >= 0 && parts[typeIdx + 1]) {
+      return `multiverse.v/${decodeURIComponent(parts[typeIdx + 1])}`;
+    }
     return u.host + u.pathname;
   } catch {
     return url;

@@ -20,6 +20,9 @@ import ReceiveRedirect from "./pages/Receive/Receive";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 
+const routerBasename =
+  (import.meta.env.BASE_URL || "/share").replace(/\/$/, "") || "/";
+
 function App() {
   const [whitListIp, setWhitListIp] = useState(""); // make ipv4 whitelist
   const [whitListIpV6, setWhitListIpV6] = useState(""); // make ipv6 whitelist
@@ -49,7 +52,7 @@ function App() {
   ) : (
     <div className="App">
       {allowAccessContent ? (
-          <BrowserRouter basename="/share">
+          <BrowserRouter basename={routerBasename}>
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/auth" element={<Auth />} />
@@ -63,9 +66,13 @@ function App() {
                 <Route path="settings" element={<SettingsPage />} />
               </Route>
               <Route path="/text" element={<Share fixedType="text" />} />
+              <Route path="/text/:code" element={<Share fixedType="text" />} />
               <Route path="/image" element={<Share fixedType="image" />} />
+              <Route path="/image/:code" element={<Share fixedType="image" />} />
               <Route path="/file" element={<Share fixedType="file" />} />
+              <Route path="/file/:code" element={<Share fixedType="file" />} />
               <Route path="/audio" element={<Share fixedType="audio" />} />
+              <Route path="/audio/:code" element={<Share fixedType="audio" />} />
               <Route path="/chat" element={<Chat />} />
               <Route path="/types" element={<TypesRedirect />} />
               <Route path="/receive" element={<ReceiveRedirect />} />

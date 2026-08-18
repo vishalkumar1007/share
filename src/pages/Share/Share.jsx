@@ -1,13 +1,20 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate, useParams } from "react-router-dom";
 import FeatureShell from "../../components/FeatureShell/FeatureShell";
 import ShareWorkspace from "../../components/ShareWorkspace/ShareWorkspace";
 import "./Share.css";
 
 const Share = ({ fixedType = "text" }) => {
+  const { code: pathCode } = useParams();
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
-  const modeParam = params.get("mode") === "receive" ? "receive" : "share";
-  const code = params.get("multiversecode") || "";
+  const explicitMode = params.get("mode");
+  const code = (params.get("multiversecode") || pathCode || "").trim();
+  const modeParam =
+    explicitMode === "share" || explicitMode === "receive"
+      ? explicitMode
+      : pathCode
+        ? "receive"
+        : "share";
 
   const syncParams = ({ mode } = {}) => {
     const next = new URLSearchParams(params);
@@ -28,9 +35,7 @@ const Share = ({ fixedType = "text" }) => {
         hideUniverseRail
         onModeChange={(mode) => syncParams({ mode })}
         onReceiveNavigate={(shareId) =>
-          navigate(
-            `/${fixedType}?mode=receive&multiversecode=${encodeURIComponent(shareId)}`
-          )
+          navigate(`/${fixedType}/${encodeURIComponent(shareId)}`)
         }
       />
     </FeatureShell>

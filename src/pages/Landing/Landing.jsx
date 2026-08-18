@@ -105,10 +105,7 @@ const Landing = () => {
   useEffect(() => {
     const code = params.get("multiversecode");
     if (code) {
-      navigator(
-        `/text?mode=receive&multiversecode=${encodeURIComponent(code)}`,
-        { replace: true }
-      );
+      navigator(`/text/${encodeURIComponent(code)}`, { replace: true });
     }
   }, [params, navigator]);
 
